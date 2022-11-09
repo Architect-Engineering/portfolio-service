@@ -56,6 +56,9 @@ public class PortfolioService {
 	@Value("${pivotal.accountsService.name}")
 	protected String accountsService;
 
+	@Value("${pivotal.accountsService.url}")
+	protected String accountsServiceUrl;
+	
 	/**
 	 * Retrieves the portfolio for the given accountId.
 	 *
@@ -175,11 +178,10 @@ public class PortfolioService {
 
 		ClientResponse result = webClient
 				.post()
-				.uri("//"
-								+ accountsService
-								+ "/accounts/transaction")
-                .contentType(MediaType.APPLICATION_JSON)
-                .syncBody(transaction)
+//				.uri("//" + accountsService + "/accounts/transaction")
+				.uri(accountsServiceUrl + "/accounts/transaction")
+				.contentType(MediaType.APPLICATION_JSON)
+				.syncBody(transaction)
 				.exchange()
 				.block();
 		if (result.statusCode() == HttpStatus.OK) {

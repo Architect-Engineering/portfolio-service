@@ -33,6 +33,9 @@ public class QuoteRemoteCallService {
 	@Value("${pivotal.quotesService.name}")
 	private String quotesService;
 
+	@Value("${pivotal.quotesService.url}")
+	private String quotesServiceUrl;
+	
 	@Autowired
 	private WebClient webClient;
 
@@ -49,7 +52,8 @@ public class QuoteRemoteCallService {
 		logger.debug("Fetching quote: " + symbol);
 		Quote quote = webClient
 				.get()
-				.uri("//" + quotesService + "/quote/" + symbol)
+//				.uri("//" + quotesService + "/quote/" + symbol)
+				.uri(quotesServiceUrl + "/quote/" + symbol)
 				.retrieve()
 				.bodyToMono(Quote.class)
 				.block();
@@ -86,7 +90,8 @@ public class QuoteRemoteCallService {
 		ParameterizedTypeReference<List<Quote>> typeRef = new ParameterizedTypeReference<List<Quote>>() {};
 		List<Quote> quotes = webClient
 				.get()
-				.uri("//" + quotesService + "/v1/quotes?q=" + symbols)
+//				.uri("//" + quotesService + "/v1/quotes?q=" + symbols)
+				.uri(quotesServiceUrl + "/v1/quotes?q=" + symbols)
 				.retrieve()
 				.bodyToMono(typeRef)
 				.block();

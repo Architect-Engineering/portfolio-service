@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+management:
+  health:
+    rabbit:
+      enabled: false
+
+logging:
+  level:
+    io:
+      pivotal: DEBUG
+    com:
+      netflix: INFO
+    org:
+      springframework:
+        web: INFO
+        cloud: WARN
+
+# disable the hystrix streaming on rabbit locally
+hystrix:
+  stream:
+    queue:
+      enabled: false
+
+pivotal:
+  accountsService:
+    name: accounts-service
+    url: http://accounts-service:8082
+  quotesService:
+    name: quotes-service
+    url: http://quotes-service:8083
